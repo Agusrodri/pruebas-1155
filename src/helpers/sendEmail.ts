@@ -17,7 +17,7 @@ export default (sender: string, textFromSender: string) => {
                 from: 'contact@bitionz.net',
                 to: 'contact@bitionz.net',
                 subject: "Contacto Bitionz.net",
-                text: `Email remitente: ${sender}\nTexto: ${textFromSender}`,
+                text: `Email de contacto: ${sender}\n\nContenido: \n    ${textFromSender}`,
                 //html: `<a href=${nuevoLink}>Click aquí para verificar tu cuenta</a>` // html body
             };
 
