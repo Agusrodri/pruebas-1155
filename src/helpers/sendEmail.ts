@@ -5,7 +5,6 @@ require("dotenv").config();
 export default (sender: string, textFromSender: string) => {
     return new Promise<string>((resolve, reject) => {
         try {
-            console.log("Entre")
             const transporter = nodeMailer.createTransport({
                 service: 'gmail',
                 auth: {
@@ -16,12 +15,11 @@ export default (sender: string, textFromSender: string) => {
 
             const mailOptions = {
                 from: 'contact@bitionz.net',
-                to: 'agusrodriguez2456@gmail.com',
+                to: 'contact@bitionz.net',
                 subject: "Default subject",
                 text: `Email remitente: ${sender}\nTexto: ${textFromSender}`,
                 //html: `<a href=${nuevoLink}>Click aquí para verificar tu cuenta</a>` // html body
             };
-
 
             transporter.sendMail(mailOptions, (error, info) => {
                 if (error) {
@@ -30,7 +28,6 @@ export default (sender: string, textFromSender: string) => {
                 //console.log('Message %s sent: %s', info.messageId, info.response);
                 resolve(`Mensaje enviado: ${info.messageId} ${info.response}`)
             });
-
 
         } catch (error) {
             console.log(error)
