@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import logger from 'morgan';
+//import logger from 'morgan';
 import NotFoundError from './src/errors/notFoundError';
 import sendEmail from './src/helpers/sendEmail'
 
@@ -9,7 +9,7 @@ if (!process.env.PORT) {
   require('dotenv').config();
 }
 app.use(express.json())
-app.use(logger('dev'))
+//app.use(logger('dev'))
 
 app.post('/sendEmail', async (req: Request, res: Response) => {
 
