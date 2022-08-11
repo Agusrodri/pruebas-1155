@@ -14,9 +14,9 @@ export default (sender: string, textFromSender: string) => {
             });
 
             const mailOptions = {
-                from: 'agusrodriguez2456@gmail.com',
+                from: 'contact@bitionz.net',
                 to: 'contact@bitionz.net',
-                subject: "Default subject",
+                subject: "Contacto Bitionz.net",
                 text: `Email remitente: ${sender}\nTexto: ${textFromSender}`,
                 //html: `<a href=${nuevoLink}>Click aquí para verificar tu cuenta</a>` // html body
             };
