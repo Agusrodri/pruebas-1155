@@ -9,13 +9,13 @@ const app = express();
 if (!process.env.PORT) {
   require('dotenv').config();
 }
-app.use(cors());
+app.use(cors({ origin: '*', methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'] }));
 app.use(express.json())
 //app.use(logger('dev'))
-app.use((req: Request, res: Response) => {
+/* app.use((req: Request, res: Response) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST,GET,PUT,DELETE,PATCH,HEAD,OPTIONS");
-})
+}) */
 
 app.post('/sendEmail', async (req: Request, res: Response) => {
 
