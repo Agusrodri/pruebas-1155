@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
 //import logger from 'morgan';
+import cors from "cors";
 import NotFoundError from './src/errors/notFoundError';
 import sendEmail from './src/helpers/sendEmail'
 
@@ -8,8 +9,13 @@ const app = express();
 if (!process.env.PORT) {
   require('dotenv').config();
 }
+app.use(cors());
 app.use(express.json())
 //app.use(logger('dev'))
+app.use((req: Request, res: Response) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST,GET,PUT,DELETE,PATCH,HEAD,OPTIONS");
+})
 
 app.post('/sendEmail', async (req: Request, res: Response) => {
 
