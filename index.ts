@@ -24,11 +24,11 @@ app.post('/sendEmail', async (req: Request, res: Response) => {
     const { sender, textFromSender } = req.body
     if (myCache.has(`${sender}`)) {
       return res.status(401).json({
-        msg: "Wait 3 minutes to send a new Email."
+        msg: "Wait 2 minutes to send a new Email."
       })
     }
 
-    myCache.set(`${sender}`, 0, 180000) //el email remitente se guarda en la cache por tres minutos
+    myCache.set(`${sender}`, 0, 120000) //el email remitente se guarda en la cache por tres minutos
     await sendEmail(sender, textFromSender)
     res.status(200).json({ msg: "Email sent." })
 
