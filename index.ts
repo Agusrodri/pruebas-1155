@@ -4,6 +4,10 @@ import cors from "cors";
 import NotFoundError from './src/errors/notFoundError';
 import sendEmail from './src/helpers/sendEmail'
 
+const NodeCache = require("node-cache");
+const myCache = new NodeCache();
+export { myCache }
+
 const app = express();
 
 if (!process.env.PORT) {
@@ -12,20 +16,21 @@ if (!process.env.PORT) {
 app.use(cors({ origin: '*', methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'] }));
 app.use(express.json())
 //app.use(logger('dev'))
-/* app.use((req: Request, res: Response) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "POST,GET,PUT,DELETE,PATCH,HEAD,OPTIONS");
-}) */
 
 app.post('/sendEmail', async (req: Request, res: Response) => {
 
   try {
 
     const { sender, textFromSender } = req.body
-    console.log(sender, textFromSender)
-    await sendEmail(sender, textFromSender)
+    if (myCache.has(`${sender}`)) {
+      return res.status(401).json({
+        msg: "Wait 3 minutes to send a new Email."
+      })
+    }
 
-    res.status(200).json({ msg: "Email enviado" })
+    myCache.set(`${sender}`, 0, 180000) //el email remitente se guarda en la cache por tres minutos
+    await sendEmail(sender, textFromSender)
+    res.status(200).json({ msg: "Email sent." })
 
   } catch (error) {
     console.log(error)
