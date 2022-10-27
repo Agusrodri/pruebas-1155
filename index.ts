@@ -17,25 +17,10 @@ app.use(cors({ origin: '*', methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 
 app.use(express.json())
 //app.use(logger('dev'))
 
-app.post('/sendEmail', async (req: Request, res: Response) => {
+app.use(express.static(__dirname + "/src/public"))
 
-  try {
-
-    const { sender, textFromSender } = req.body
-    if (myCache.has(`${sender}`)) {
-      return res.status(401).json({
-        msg: "Wait 2 minutes to send a new Email."
-      })
-    }
-
-    myCache.set(`${sender}`, 0, 120) //el email remitente se guarda en la cache por tres minutos
-    await sendEmail(sender, textFromSender)
-    res.status(200).json({ msg: "Email sent." })
-
-  } catch (error) {
-    console.log(error)
-    res.status(500).json(error)
-  }
+app.get('/health', async (req: Request, res: Response) => {
+  res.send("ok")
 
 });
 
